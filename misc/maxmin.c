@@ -3,9 +3,9 @@
 #include <time.h>
 #define x 10
 #define y 100
-int min = 9999999;
+int min;
 int count = 0;
-int max = -99999;
+int max;
 int t1;
 int t2;
 int findminmax(int arr[], int l, int r) {

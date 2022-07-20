@@ -9,7 +9,7 @@ void main() {
     int n = 10;
     int a[100];
     int sum = 0, i, j, count, num;
-    float x, polySum;
+    float x;
     FILE *fp = NULL;
 
     fp = fopen("poly2.txt", "w");
@@ -20,7 +20,7 @@ void main() {
         x = j;
         for (i = 0; i <= num; i++)
             a[i] = rand() % 10;
-        polySum = a[0];
+
         for (i = 1; i <= num; i++) {
             p = p * x;
             sum = sum + a[i] * p;

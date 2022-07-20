@@ -42,7 +42,7 @@ void binary(int choice) {
         res = rand() % 100;
         for (j = 0; j < i; j++) {
             arr[j] = j + res;
-            fprintf(fp1, "%d", arr[j]);
+            fprintf(fp1, "%d ", arr[j]);
         }
         fprintf(fp1, "\n");
         if (choice == 1) {
@@ -61,18 +61,7 @@ void binary(int choice) {
 }
 
 void main() {
-    int choice;
-    for (;;) {
-        printf("\n1.Best\n2.Worst\n3.Average\n");
-        scanf("%d", &choice);
-        switch (choice) {
-        case 1:
-        case 2:
-        case 3:
-            binary(choice);
-            break;
-        default:
-            exit(0);
-        }
+    for (int i = 1; i <= 3; i++) {
+        binary(i);
     }
 }
