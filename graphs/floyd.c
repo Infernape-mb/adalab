@@ -24,52 +24,29 @@ void floyd(int a[][n]) {
     }
 }
 int main() {
-    /*printf("Enter the order of a matrix \n");
-    scanf("%d",&n);
+    printf("Enter the order of a matrix \n");
+    scanf("%d", &n);
     int a[n][n];
     printf("ENter the adjacence matrix\n");
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            scanf("%d",&a[i][j]);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &a[i][j]);
         }
     }
-        for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            printf("%d\t",a[i][j]);
+    printf("The input matrix is \n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", a[i][j]);
         }
         printf("\n");
     }
+    printf("\n");
     floyd(a);
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                printf("%d\t",a[i][j]);
-            }
-            printf("\n");
+    printf("The shortest path matrix is \n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", a[i][j]);
         }
-    */
-    FILE *a;
-    system("rm -r *.txt");
-    a = fopen("output.txt", "a");
-    for (int c = 4; c < 12; c++) {
-        n = c;
-        int arr[n][n];
-        count = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                arr[i][j] = __INT32_MAX__;
-            }
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i == j) {
-                    arr[i][j] = 0;
-                } else {
-                    int temp1 = rand() % 2;
-                    arr[i][j] = temp1;
-                }
-            }
-        }
-        floyd(arr);
-        fprintf(a, "%d\t%d\n", c, count);
+        printf("\n");
     }
 }

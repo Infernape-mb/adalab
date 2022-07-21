@@ -23,48 +23,29 @@ void warshel(int a[][n]) {
     }
 }
 int main() {
-    /*printf("Enter the order of a matrix \n");
-    scanf("%d",&n);
+    printf("Enter the order of a matrix \n");
+    scanf("%d", &n);
     int a[n][n];
     printf("ENter the adjacence matrix\n");
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            scanf("%d",&a[i][j]);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &a[i][j]);
         }
     }
-        for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            printf("%d\t",a[i][j]);
+    printf("The input matrix is \n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", a[i][j]);
         }
         printf("\n");
-    }*/
-    FILE *a;
-    system("rm -r *.txt");
-    a = fopen("output.txt", "a");
-    for (int c = 4; c < 12; c++) {
-        n = c;
-        int arr[n][n];
-        count = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                arr[i][j] = 0;
-            }
+    }
+    warshel(a);
+
+    printf("The transitive closure matrix is \n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", a[i][j]);
         }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i == j) {
-                    arr[i][j] = 0;
-                } else {
-                    int temp1 = rand() % 2;
-                    if (arr[j][i] == 1)
-                        continue;
-                    else
-                        arr[i][j] = temp1;
-                }
-            }
-        }
-        warshel(arr);
-        fprintf(a, "%d\t%d\n", c, count);
-        printf("ans is \n");
+        printf("\n");
     }
 }

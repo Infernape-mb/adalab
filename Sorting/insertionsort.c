@@ -14,8 +14,8 @@ void insertion(int arr[], int n) {
             count++;
         }
 
-        count++;
         arr[j + 1] = v;
+        count++;
     }
 }
 void insertionmain(int choice) {
@@ -45,21 +45,7 @@ void insertionmain(int choice) {
     fclose(a);
 }
 void main() {
-    int choice;
-    system("rm -r *.txt");
-    while (1) {
-        printf("Press 1 for best case\n");
-        printf("Press 2 for worst case\n");
-        printf("Press 3 for avg case\n");
-        scanf("%d", &choice);
-        switch (choice) {
-        case 1:
-        case 2:
-        case 3:
-            insertionmain(choice);
-            break;
-        default:
-            exit(1);
-        }
+    for (int i = 1; i <= 3; i++) {
+        insertionmain(i);
     }
 }
