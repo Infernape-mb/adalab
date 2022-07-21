@@ -1,50 +1,55 @@
 #include <stdio.h>
 #include <stdlib.h>
-int a[20][20], visited[20], n;
+#include <time.h>
 
-void dfs(int v) {
-    int i;
-    visited[v] = 1;
-    for (i = 1; i <= n; i++) {
-        if (a[v][i] && !visited[i]) {
-            printf("\n%d->%d", v, i);
-            dfs(i);
+void dfs(int v, int n, int mat[][n], int vis[]) {
+    for (int i = 0; i < n; i++) {
+        if (mat[v][i] == 1 && vis[i] == 0) {
+            vis[i] = 1;
+            printf("%d->", i);
+            dfs(i, n, mat, vis);
         }
     }
 }
-
-void connect() {
-    int count = 0;
-    for (int i = 1; i <= n; i++) {
-        if (visited[i]) {
-            count++;
-        }
-    }
-    if (count == n) {
-        printf("\nGraph is connected");
-    } else {
-        printf("\nGraph is not connected");
-    }
-}
-
-int main() {
-    int i, j;
-    int start;
-    printf("enter the number of vertices:");
+void main() {
+    int n, tm = 0, e, p, q, c = 0;
+    srand(time(NULL));
+    printf("Enter the number of vertices: ");
     scanf("%d", &n);
-    for (i = 1; i <= n; i++) // Setup
-    {
-        visited[i] = 0;
-    }
-    printf("Enter the adjacency matrix:\n");
-    for (i = 1; i <= n; i++) {
-        for (j = 1; j <= n; j++) {
-            scanf("%d", &a[i][j]);
+    tm = 0;
+    int arr[n][n];
+    int isvis[n];
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            arr[i][j] = 0;
         }
     }
-    printf("enter the starting vertex:");
-    scanf("%d", &start);
-    dfs(start);
-    printf("\n");
-    connect();
+    printf("Enter the number of edges: ");
+    scanf("%d", &e);
+    printf("\nEnter the end vertices of %d edges(v1 v2) :\n ", e);
+    for (int i = 0; i < e; i++) {
+        scanf("%d %d", &p, &q);
+        arr[p][q] = 1;
+    }
+    int vis[n];
+    for (int i = 0; i < n; i++) {
+        vis[i] = 0;
+    }
+    c = 0;
+    printf("displaying the connected componenets\n");
+    for (int i = 0; i < n; i++) {
+        if (vis[i] == 0) {
+            vis[i] = 1;
+            printf("\nnew connected graph is \n");
+            c++;
+            printf("%d->", i);
+            dfs(i, n, arr, vis);
+            printf("\n");
+        }
+    }
+    if (c == 1) {
+        printf("\nthe graph is connected\n");
+    } else {
+        printf("the graph is not connected\n");
+    }
 }

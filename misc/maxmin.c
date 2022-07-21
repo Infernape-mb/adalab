@@ -3,11 +3,9 @@
 #include <time.h>
 #define x 10
 #define y 100
-int min;
+int max, min, t1, t2;
 int count = 0;
-int max;
-int t1;
-int t2;
+
 int findminmax(int arr[], int l, int r) {
 
     if (l == r) {
@@ -25,14 +23,6 @@ int findminmax(int arr[], int l, int r) {
     }
 }
 
-void helper(int arr[], int n) {
-    count = 0;
-    int dummy;
-    t1 = 0;
-    t2 = 0;
-    dummy = findminmax(arr, 0, n - 1);
-}
-
 void main() {
     FILE *a;
     FILE *b;
@@ -47,6 +37,10 @@ void main() {
             fprintf(a, "%d\t", arr[j]);
         }
         fprintf(a, "\n");
+
+        count = 0;
+        t1 = 0;
+        t2 = 0;
         findminmax(arr, 0, i - 1);
         fprintf(b, "%d\t%d\n", i, count);
     }
