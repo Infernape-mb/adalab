@@ -1,55 +1,74 @@
 #include <stdio.h>
-/* function to heapify a subtree. Here 'i' is the
-index of root node in array a[], and 'n' is the size of heap. */
-void heapify(int a[], int n, int i) {
-    int largest = i;       // Initialize largest as root
-    int left = 2 * i + 1;  // left child
-    int right = 2 * i + 2; // right child
-    // If left child is larger than root
-    if (left < n && a[left] > a[largest])
+#include <stdlib.h>
+
+int count = 0;
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void heapify(int arr[], int n, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    ++count;
+    while (left < n && arr[largest] < arr[left])
         largest = left;
-    // If right child is larger than root
-    if (right < n && a[right] > a[largest])
+    while (right < n && arr[largest] < arr[right])
         largest = right;
-    // If root is not largest
-    if (largest != i) {
-        // swap a[i] with a[largest]
-        int temp = a[i];
-        a[i] = a[largest];
-        a[largest] = temp;
 
-        heapify(a, n, largest);
+    if (i != largest) {
+        swap(&arr[largest], &arr[i]);
+        heapify(arr, n, largest);
     }
 }
-/*Function to implement the heap sort*/
-void heapSort(int a[], int n) {
-    for (int i = n / 2 - 1; i >= 0; i--)
-        heapify(a, n, i);
-    // One by one extract an element from heap
-    for (int i = n - 1; i >= 0; i--) {
-        /* Move current root element to end*/
-        // swap a[0] with a[i]
-        int temp = a[0];
-        a[0] = a[i];
-        a[i] = temp;
 
-        heapify(a, i, 0);
+void heap(int arr[], int n) {
+    for (int i = n / 2 - 1; i > -1; --i)
+        heapify(arr, n, i);
+
+    for (int i = n - 1; i > -1; --i) {
+        swap(&arr[i], &arr[0]);
+        heapify(arr, i, 0);
     }
 }
-/* function to print the array elements */
-void printArr(int arr[], int n) {
-    for (int i = 0; i < n; ++i) {
-        printf("%d", arr[i]);
-        printf(" ");
+
+void main() {
+    FILE *a, *b, *w;
+    system("rm avg.txt;   rm worst.txt;   rm best.txt");
+    a = fopen("avg.txt", "a");
+    b = fopen("best.txt", "a");
+    w = fopen("worst.txt", "a");
+
+    for (int n = 10; n <= 100; n += 10) {
+        int arr[n];
+
+        // best case
+        for (int i = 0; i < n; ++i)
+            arr[i] = n - i;
+        heap(arr, n);
+        fprintf(b, "%d  %d\n", n, count);
+        count = 0;
+
+        // worst case
+        for (int i = 0; i < n; ++i)
+            arr[i] = i;
+        heap(arr, n);
+        fprintf(w, "%d  %d\n", n, count);
+        count = 0;
+
+        // avg case
+        for (int i = 0; i < n / 2; ++i)
+            arr[i] = rand() % 100;
+        heap(arr, n);
+        fprintf(a, "%d  %d\n", n, count);
+        count = 0;
     }
-}
-int main() {
-    int a[] = {48, 10, 23, 43, 28, 26, 1};
-    int n = sizeof(a) / sizeof(a[0]);
-    printf("Before sorting array elements are - \n");
-    printArr(a, n);
-    heapSort(a, n);
-    printf("\nAfter sorting array elements are - \n");
-    printArr(a, n);
-    return 0;
+    fclose(a);
+    fclose(b);
+    fclose(w);
+    system("gnuplot -p -c plot.txt");
 }
