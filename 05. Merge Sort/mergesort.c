@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+int count = 0;
+
 void merge(int arr[], int l, int m, int r) {
     int i, j, k;
     int n1 = m - l + 1;
@@ -22,6 +24,7 @@ void merge(int arr[], int l, int m, int r) {
     k = l;
 
     while (i < n1 && j < n2) {
+        count++;
         if (L[i] <= R[j]) {
             arr[k] = L[i];
             i++;
@@ -57,24 +60,48 @@ void Mergesort(int arr[], int l, int r) {
     }
 }
 
-void printArray(int A[], int size) {
-    int i;
-    for (i = 0; i < size; i++)
-        printf("%d ", A[i]);
-    printf("\n");
-}
+void main() {
+    srand(time(0));
+    int n, i, *arr;
+    FILE *a, *b, *w;
+    system("rm best.txt");
+    system("rm avg.txt");
+    system("rm worst.txt");
+    a = fopen("avg.txt", "a");
+    b = fopen("best.txt", "a");
+    w = fopen("worst.txt", "a");
 
-/* Driver code */
-int main() {
-    int arr[] = {32, 27, 43, 3, 9, 82, 10};
-    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    for (n = 100; n <= 1000; n += 100) {
+        arr = (int *)malloc(sizeof(int) * n);
 
-    printf("Given array is \n");
-    printArray(arr, arr_size);
+        // BEST case -> array already sorted
+        for (i = 0; i < n; i++)
+            arr[i] = i;
+        Mergesort(arr, 0, n - 1);
+        fprintf(b, "%d  %d\n", n, count);
+        count = 0;
 
-    Mergesort(arr, 0, arr_size - 1);
+        // Worst case -> even index -> even num dec
+        // odd index -> odd num incre
+        for (i = 0; i < n; i++) {
+            if (i % 2 == 0)
+                arr[i] = n - i;
+            else
+                arr[i] = i;
+        }
+        Mergesort(arr, 0, n - 1);
+        fprintf(w, "%d  %d\n", n, count);
+        count = 0;
 
-    printf("\nSorted array is \n");
-    printArray(arr, arr_size);
-    return 0;
+        // Average case -> half random numbers and half sorted
+        for (i = 0; i < n; i++)
+            arr[i] = (i > n / 2) ? i + 1 : rand() % 100;
+        Mergesort(arr, 0, n - 1);
+        fprintf(a, "%d  %d\n", n, count);
+        count = 0;
+    }
+
+    fclose(w);
+    fclose(a);
+    fclose(b);
 }

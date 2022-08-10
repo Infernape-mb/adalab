@@ -1,81 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#define x 4
-#define y 20
-int n;
-int c;
-int count;
-struct stack {
-    int arr[20];
-    int top;
-};
-typedef struct stack stack;
 
-void push(stack *s, int data) { s->arr[++s->top] = data; }
+int graph[10][10], visited[10], stack[10], stop = -1, n;
 
-int isempty(stack *s) {
-    if (s->top == -1)
-        return 1;
-    else
-        return 0;
-}
-
-int pop(stack *s) { return s->arr[s->top--]; }
-
-void dfs(int v, int n, int mat[][n], int vis[], stack *s) {
+void createGraph() {
+    printf("Enter no. of vertices: ");
+    scanf("%d", &n);
+    printf("Enter adjacency matrix:\n");
     for (int i = 0; i < n; i++) {
-        count++;
-        if (mat[v][i] == 1 && vis[i] == 0) {
-            vis[i] = 1;
-            dfs(i, n, mat, vis, s);
-        }
+        for (int j = 0; j < n; j++)
+            scanf("%d", &graph[i][j]);
     }
-    push(s, v);
 }
-void dfsmain() {
-    FILE *a;
-    FILE *b;
-    a = fopen("output.txt", "a");
-    b = fopen("result.txt", "a");
-    int tm = 0;
-    srand(time(NULL));
-    for (int j = 2; j < 20; j++) {
-        stack s;
-        s.top = -1;
-        n = j;
-        tm = 0;
-        int arr[n][n];
-        int isvis[n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                arr[i][j] = 0;
-            }
-        }
-        for (int i = 1; i < n; i++) {
-            arr[i - 1][i] = 1;
-        }
-        int vis[n];
-        for (int i = 0; i < n; i++) {
-            vis[i] = 0;
-        }
-        count = 0;
-        for (int i = 0; i < n; i++) {
-            if (vis[i] == 0) {
-                vis[i] = 1;
-                dfs(i, n, arr, vis, &s);
-            }
-        }
-        fprintf(a, "%d\t%d\n", j, count);
-        while (!isempty(&s)) {
-            int r = pop(&s);
-            fprintf(b, "%d ", r);
-        }
-        fprintf(b, "\n");
+
+void dfs(int x) {
+    visited[x] = 1;
+
+    for (int i = 0; i < n; i++)
+        if (graph[x][i] && !visited[i])
+            dfs(i);
+
+    stack[++stop] =
+        x; // pushing x to stack and this willl maintain the topological order
+}
+
+void main() {
+    int i;
+    createGraph(); // getting input matrix from user and storing it in graph[][]
+
+    for (i = 0; i < n; i++)
+        visited[i] = 0; // initializing visited array to 0 (false)
+
+    for (i = 0; i < n; i++) {
+        if (visited[i] == 0)
+            dfs(i); // calling dfs on all unvisited vertices
     }
-    fclose(a);
-}
-int main() {
-    system("rm -r *.txt");
-    dfsmain();
+
+    printf("Topologically sorted order\n");
+    for (i = n - 1; i >= 0; i--)
+        printf("%d --> ", stack[i]); // printing stack (taken as array for
+                                     // simplicity) in reverse order
 }
