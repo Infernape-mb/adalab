@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 int n;
-int count;
 void warshel(int a[][n]) {
     // completed calulating d0 matrix;
     // we are usign a as a previous  matrix and current as a current matrix
@@ -9,7 +8,6 @@ void warshel(int a[][n]) {
         int current[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                count++;
                 current[i][j] = a[i][j] || (a[i][k] && a[k][j]);
             }
         }

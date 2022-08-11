@@ -1,7 +1,0 @@
-set title "Heap sort analysis..."
-set xrange [ -20: 120]
-set yrange [ -20: 700]
-set xlabel "Input size(N)"
-set ylabel "Operational count (C(N))"
-set style data line
-plot "avg.txt" using 1:2 title "Avg case", "best.txt" using 1:2 title "Best case", "worst.txt" using 1:2 title "Worst case"

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 int n;
-int count;
 int min(int a, int b) { return (a < b) ? a : b; }
 void floyd(int a[][n]) {
     // completed calulating d0 matrix;
@@ -10,7 +9,6 @@ void floyd(int a[][n]) {
         int current[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                count++;
                 current[i][j] = min(a[i][j], (a[i][k] + a[k][j]));
             }
         }
